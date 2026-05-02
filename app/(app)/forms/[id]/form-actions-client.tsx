@@ -4,7 +4,7 @@ import { useState, useTransition, useRef, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { MoreHorizontal, Pause, Play, Trash2 } from 'lucide-react';
 import { toast } from 'sonner';
-import { toggleFormActive, deleteForm } from '../actions';
+import { setFormActive, deleteForm } from '../actions';
 
 const MENU_WIDTH = 192;
 
@@ -87,7 +87,7 @@ export function FormActions({
                     type="button"
                     className="w-full flex items-center gap-2 px-3 py-2 text-sm text-slate-700 hover:bg-cream-200"
                     onClick={() =>
-                      run('Form paused', () => toggleFormActive(formId, false))
+                      run('Form paused', () => setFormActive(formId, false))
                     }
                   >
                     <Pause className="h-3.5 w-3.5" />
@@ -98,7 +98,7 @@ export function FormActions({
                     type="button"
                     className="w-full flex items-center gap-2 px-3 py-2 text-sm text-slate-700 hover:bg-cream-200"
                     onClick={() =>
-                      run('Form is live', () => toggleFormActive(formId, true))
+                      run('Form is live', () => setFormActive(formId, true))
                     }
                   >
                     <Play className="h-3.5 w-3.5" />
