@@ -98,12 +98,11 @@ export default async function DashboardPage() {
       : 0;
 
   // ---------- Recent activity (spec: recent activity) ----------
-  // Pull recent enrolments, recent campaign sends, recent sessions
   const [
     { data: recentEnrolments },
     { data: recentCampaigns },
     { data: recentSessions },
-    { data: pendingMessages },
+    pendingMessages,
   ] = await Promise.all([
     supabase
       .from('enrolments')
@@ -133,6 +132,8 @@ export default async function DashboardPage() {
       .eq('status', 'pending')
       .lte('send_at', new Date().toISOString()),
   ]);
+
+  const pendingCount = pendingMessages.count ?? 0;
 
   return (
     <div className="space-y-8">
@@ -227,12 +228,12 @@ export default async function DashboardPage() {
           ) : null}
 
           {/* Pending queue alert */}
-          {(pendingMessages?.count ?? 0) > 0 ? (
+          {pendingCount > 0 ? (
             <div className="rounded-lg bg-amber-50 border border-amber-200 px-4 py-3 flex items-center justify-between gap-3 flex-wrap">
               <div className="flex items-center gap-2 text-sm text-amber-800">
                 <Bell className="h-4 w-4" />
-                {pendingMessages?.count} message
-                {pendingMessages?.count === 1 ? '' : 's'} ready to send.
+                {pendingCount} message
+                {pendingCount === 1 ? '' : 's'} ready to send.
               </div>
               <Link href="/campaigns">
                 <Button variant="outline" size="sm">
