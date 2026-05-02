@@ -4,11 +4,7 @@ import { useState, useTransition, useRef, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { MoreHorizontal, BellOff, Bell, Trash2 } from 'lucide-react';
 import { toast } from 'sonner';
-import {
-  unsubscribeStudent,
-  resubscribeStudent,
-  deleteStudent,
-} from '../actions';
+import { setSubscribed, deleteStudent } from '../actions';
 
 const MENU_WIDTH = 192;
 
@@ -91,7 +87,9 @@ export function StudentActions({
                     type="button"
                     className="w-full flex items-center gap-2 px-3 py-2 text-sm text-slate-700 hover:bg-cream-200"
                     onClick={() =>
-                      run('Unsubscribed', () => unsubscribeStudent(studentId))
+                      run('Unsubscribed', () =>
+                        setSubscribed(studentId, false)
+                      )
                     }
                   >
                     <BellOff className="h-3.5 w-3.5" />
@@ -102,7 +100,9 @@ export function StudentActions({
                     type="button"
                     className="w-full flex items-center gap-2 px-3 py-2 text-sm text-slate-700 hover:bg-cream-200"
                     onClick={() =>
-                      run('Resubscribed', () => resubscribeStudent(studentId))
+                      run('Resubscribed', () =>
+                        setSubscribed(studentId, true)
+                      )
                     }
                   >
                     <Bell className="h-3.5 w-3.5" />
