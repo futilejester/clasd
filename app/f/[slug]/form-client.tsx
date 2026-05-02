@@ -68,13 +68,21 @@ export function PublicFormClient({
     }
   }, [embed, done, form.id]);
 
-  function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setError(null);
     const fd = new FormData(e.currentTarget);
 
-startTransition(async () => {
-  const r = await submitPublicForm(form.slug, fd);
+    startTransition(async () => {
+      const r = await submitPublicForm(form.slug, fd);
+      if (r?.error) {
+        setError(r.error);
+      } else if (r && 'success' in r && r.success) {
+        setDone(true);
+      } else {
+        setDone(true);
+      }
+    });
   }
 
   if (done) {
