@@ -72,16 +72,9 @@ export function PublicFormClient({
     e.preventDefault();
     setError(null);
     const fd = new FormData(e.currentTarget);
-    fd.set('slug', form.slug);
 
-    startTransition(async () => {
-      const r = await submitPublicForm(fd);
-      if (r?.error) {
-        setError(r.error);
-      } else if (r?.success) {
-        setDone(true);
-      }
-    });
+startTransition(async () => {
+  const r = await submitPublicForm(form.slug, fd);
   }
 
   if (done) {
